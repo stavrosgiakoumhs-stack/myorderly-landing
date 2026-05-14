@@ -11,6 +11,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Orderly — QR ordering για μαγαζιά εστίασης",
   description: "Απλό QR ordering για καφέ, bars, εστιατόρια και beach bars.",
+  icons: {
+    icon: [{ url: "/orderly-logo.png", type: "image/png" }],
+    shortcut: "/orderly-logo.png",
+    apple: [{ url: "/orderly-logo.png", type: "image/png" }],
+  },
   openGraph: {
     title: "Orderly — QR ordering για μαγαζιά εστίασης",
     description: "Απλό QR ordering για καφέ, bars, εστιατόρια και beach bars.",
