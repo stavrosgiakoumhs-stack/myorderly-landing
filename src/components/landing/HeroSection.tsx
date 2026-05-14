@@ -120,15 +120,14 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div>
-            <div className="mb-6 flex max-w-full flex-wrap items-center gap-3 rounded-2xl border border-white/80 bg-white/70 px-4 py-3 shadow-sm shadow-slate-900/5 ring-1 ring-slate-200/60 backdrop-blur-sm sm:gap-4 sm:px-5 sm:py-3.5">
-              <OrderlyLogo
-                className="h-14 w-auto max-w-[min(100%,220px)] object-contain object-left sm:h-16 sm:max-w-[260px] lg:h-[4.25rem] lg:max-w-[300px]"
-                sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 300px"
-              />
-              <span className="hidden h-10 w-px shrink-0 bg-slate-200 sm:block" aria-hidden />
-              <span className="w-full text-xs font-medium leading-snug text-slate-500 sm:w-auto sm:text-sm">
-                QR ordering για εστίαση
-              </span>
+            <div className="mb-8 sm:mb-10">
+              <div className="inline-flex overflow-hidden rounded-[1.35rem] shadow-[0_12px_40px_-8px_rgba(15,23,42,0.18)] ring-1 ring-slate-900/[0.08] sm:rounded-[1.5rem]">
+                <OrderlyLogo
+                  priority
+                  className="block h-[5.75rem] w-[5.75rem] object-cover object-center sm:h-28 sm:w-28 lg:h-32 lg:w-32"
+                  sizes="(max-width: 640px) 92px, (max-width: 1024px) 112px, 128px"
+                />
+              </div>
             </div>
             <h1 className="text-balance text-3xl font-extrabold tracking-tight text-orderly-navy sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12]">
               QR παραγγελίες για καφέ, bar και εστίαση — απλά και γρήγορα.
