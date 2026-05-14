@@ -120,10 +120,15 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div>
-            <div className="mb-6 inline-flex items-center gap-3 rounded-2xl border border-white/80 bg-white/70 px-3 py-2 shadow-sm shadow-slate-900/5 ring-1 ring-slate-200/60 backdrop-blur-sm">
-              <OrderlyLogo className="h-10 w-auto max-w-[120px] object-contain object-left sm:h-11 sm:max-w-[132px]" sizes="132px" />
-              <span className="hidden h-8 w-px bg-slate-200 sm:block" aria-hidden />
-              <span className="hidden text-xs font-medium text-slate-500 sm:block">QR ordering για εστίαση</span>
+            <div className="mb-6 flex max-w-full flex-wrap items-center gap-3 rounded-2xl border border-white/80 bg-white/70 px-4 py-3 shadow-sm shadow-slate-900/5 ring-1 ring-slate-200/60 backdrop-blur-sm sm:gap-4 sm:px-5 sm:py-3.5">
+              <OrderlyLogo
+                className="h-14 w-auto max-w-[min(100%,220px)] object-contain object-left sm:h-16 sm:max-w-[260px] lg:h-[4.25rem] lg:max-w-[300px]"
+                sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 300px"
+              />
+              <span className="hidden h-10 w-px shrink-0 bg-slate-200 sm:block" aria-hidden />
+              <span className="w-full text-xs font-medium leading-snug text-slate-500 sm:w-auto sm:text-sm">
+                QR ordering για εστίαση
+              </span>
             </div>
             <h1 className="text-balance text-3xl font-extrabold tracking-tight text-orderly-navy sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12]">
               QR παραγγελίες για καφέ, bar και εστίαση — απλά και γρήγορα.
