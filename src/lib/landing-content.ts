@@ -1,149 +1,199 @@
 export const REGISTER_URL = "https://app.myorderly.gr/register";
 export const LOGIN_URL = "https://app.myorderly.gr/login";
 export const CONTACT_EMAIL = "stavrosgiakoumhs@gmail.com";
+export const CONTACT_CTA_LABEL = "Επικοινώνησε για ενεργοποίηση";
 
-export const problems = [
-  {
-    title: "Χαμένες παραγγελίες",
-    description: "Χάος με χαρτάκια, φωνές και παρανοήσεις στην αίθουσα.",
-  },
-  {
-    title: "Καθυστερήσεις στο service",
-    description: "Οι πελάτες περιμένουν περισσότερο απ’ όσο πρέπει.",
-  },
-  {
-    title: "Πολλά πήγαινε-έλα",
-    description: "Η ομάδα τρέχει συνέχεια αντί να εστιάζει στην εξυπηρέτηση.",
-  },
-  {
-    title: "Λάθη σε προϊόντα και extras",
-    description: "Παραγγελίες που φτάνουν λάθος ή ελλιπείς.",
-  },
-  {
-    title: "Πίεση σε ώρες αιχμής",
-    description: "Όταν γεμίζει το μαγαζί, το σύστημα «σπάει».",
-  },
-] as const;
+export function contactMailto(plan?: "Starter" | "Pro"): string {
+  const subject = plan
+    ? `Ενδιαφέρον για Orderly ${plan}`
+    : "Ενδιαφέρον για ενεργοποίηση Orderly";
+  const body = plan
+    ? `Γεια σας,\n\nΘα ήθελα να ενεργοποιήσουμε το πακέτο ${plan} (${plan === "Pro" ? "40€" : "25€"}/μήνα) για το κατάστημά μου.\n\n`
+    : "Γεια σας,\n\nΘα ήθελα πληροφορίες για χειροκίνητη ενεργοποίηση του Orderly στο κατάστημά μου.\n\n";
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
-export const solutions = [
-  {
-    title: "QR ανά τραπέζι",
-    description: "Κάθε τραπέζι έχει το δικό του link και ξεκάθαρη ροή παραγγελιών.",
-    icon: "qr",
-  },
-  {
-    title: "Ψηφιακό μενού",
-    description: "Καθαρή παρουσίαση προϊόντων, τιμών και διαθεσιμότητας.",
-    icon: "menu",
-  },
-  {
-    title: "Live παραγγελίες",
-    description: "Βλέπεις τι μπαίνει σε πραγματικό χρόνο στο dashboard.",
-    icon: "pulse",
-  },
-  {
-    title: "Waiter view",
-    description: "Ιδιωτικό link για σερβιτόρους και συγκεκριμένα τραπέζια.",
-    icon: "waiter",
-  },
-  {
-    title: "Extras προϊόντων",
-    description: "Χρεώσιμα extras και επιλογές χωρίς μπέρδεμα στο service.",
-    icon: "extras",
-  },
-  {
-    title: "Ολοκλήρωση παραγγελιών",
-    description: "Ξεκάθαρη ροή από «νέα» μέχρι «ολοκληρώθηκε».",
-    icon: "check",
-  },
+export const siteMeta = {
+  title: "Orderly — Σύστημα παραγγελιοληψίας για καφέ, bar και εστιατόρια",
+  description:
+    "QR στο τραπέζι, Waiter PDA, Orderly Print και live dashboard. Παραγγελιοληψία, λογαριασμοί και εκτυπώσεις προς bar και κουζίνα — σε ένα σύστημα.",
+} as const;
+
+export const demoMeta = {
+  title: "Διαδραστικό Demo",
+  description:
+    "Δοκίμασε το Orderly ως πελάτης, σερβιτόρος ή ιδιοκτήτης. Διαδραστικό demo με δοκιμαστικά δεδομένα — δεν είναι πραγματικός λογαριασμός και δεν δημιουργεί παραγγελίες.",
+} as const;
+
+export const navItems = [
+  { id: "product", label: "Προϊόν", href: "/#product" },
+  { id: "demo", label: "Demo", href: "/demo" },
+  { id: "how-it-works", label: "Πώς λειτουργεί", href: "/#how-it-works" },
+  { id: "pricing", label: "Πακέτα", href: "/#pricing" },
+  { id: "faq", label: "FAQ", href: "/#faq" },
 ] as const;
 
 export const howSteps = [
   {
     step: 1,
-    title: "Περνάς προϊόντα και κατηγορίες",
-    description: "Στήνεις το μενού σου με κατηγορίες, τιμές και extras.",
+    title: "Στήσε το κατάστημα",
+    description: "Περνάς προϊόντα, κατηγορίες, extras και επιλογές. Δημιουργείς τραπέζια και QR.",
   },
   {
     step: 2,
-    title: "Δημιουργείς τραπέζια και QR",
-    description: "Κάθε τραπέζι παίρνει το δικό του QR για άμεση πρόσβαση.",
+    title: "Πάρε την παραγγελία",
+    description:
+      "Ο πελάτης σκανάρει το QR στο τραπέζι. Στο Pro, ο σερβιτόρος περνά παραγγελία από PDA — dine-in ή Take Away.",
   },
   {
     step: 3,
-    title: "Ο πελάτης σκανάρει και παραγγέλνει",
-    description: "Από browser — χωρίς εγκατάσταση εφαρμογής.",
+    title: "Στείλε στην παραγωγή",
+    description: "Το Orderly Print δρομολογεί την παραγγελία στο bar και την κουζίνα.",
   },
   {
     step: 4,
-    title: "Η ομάδα βλέπει και ολοκληρώνει την παραγγελία",
-    description: "Dashboard και waiter view για γρήγορη εκτέλεση.",
+    title: "Παρακολούθησε και ολοκλήρωσε",
+    description:
+      "Live dashboard για τις παραγγελίες. Στο Pro, ολοκλήρωση λογαριασμών με μετρητά ή κάρτα, βάρδιες και αναφορές.",
   },
 ] as const;
 
-export const featureCards = [
-  { title: "QR ανά τραπέζι", description: "Ξεκάθαρη ταύτιση παραγγελίας με τραπέζι." },
-  { title: "Live dashboard", description: "Ζωντανή εικόνα των παραγγελιών." },
-  { title: "Waiter view", description: "Ιδιωτικό link για την ομάδα πεδίου." },
-  { title: "Κατηγορίες και προϊόντα", description: "Οργανωμένο μενού που ενημερώνεται εύκολα." },
-  { title: "Χρεώσιμα extras", description: "Extras και επιλογές με σωστή τιμολόγηση." },
-  { title: "Ολοκλήρωση παραγγελιών", description: "Κατάσταση παραγγελίας για λιγότερο χάος." },
-  { title: "Χωρίς app download", description: "Ο πελάτης ανοίγει απευθείας από το QR." },
-  { title: "Χωρίς POS integration", description: "Απλό setup — χωρίς πολύπλοκες ενσωματώσεις." },
-  { title: "Χωρίς online πληρωμές πελατών", description: "Οι πληρωμές μένουν όπως ήδη δουλεύεις." },
+export const capabilityGroups = [
+  {
+    id: "customer",
+    title: "Παραγγελία στο τραπέζι",
+    description: "Ο πελάτης παραγγέλνει μόνος του, χωρίς εφαρμογή.",
+    items: [
+      { title: "QR ανά τραπέζι", description: "Κάθε τραπέζι έχει το δικό του link και καθαρή ροή." },
+      { title: "Ψηφιακό μενού", description: "Κατηγορίες, προϊόντα, τιμές και διαθεσιμότητα." },
+      { title: "Extras και επιλογές", description: "Προσαρμογές με σωστή χρέωση, χωρίς παρανοήσεις." },
+      { title: "Χωρίς app", description: "Άνοιγμα από τον browser του κινητού." },
+    ],
+  },
+  {
+    id: "service",
+    title: "Service και PDA",
+    description: "Εργαλεία για την ομάδα αίθουσας — στο πακέτο Pro.",
+    items: [
+      { title: "Waiter PDA", description: "Ο σερβιτόρος περνά παραγγελία από το κινητό ή tablet." },
+      { title: "Παραγγελία σε τραπέζι", description: "Επιλογή τραπεζιού, άτομα και μενού στην ίδια ροή." },
+      { title: "Take Away", description: "Παραγγελία πακέτου χωρίς να χρειάζεται τραπέζι." },
+      { title: "Βάρδιες", description: "Λειτουργική εικόνα βάρδιας για την ομάδα service." },
+    ],
+  },
+  {
+    id: "print",
+    title: "Παραγωγή",
+    description: "Η παραγγελία φτάνει εκεί που πρέπει να ετοιμαστεί.",
+    items: [
+      { title: "Orderly Print", description: "Εκτύπωση παραγγελιών προς τα σημεία παραγωγής." },
+      { title: "Bar και κουζίνα", description: "Δρομολόγηση ανά προϊόν — ποτά στο bar, πιάτα στην κουζίνα." },
+      { title: "Λιγότερα λάθη", description: "Ξεκάθαρο ticket αντί για φωνές και χαρτάκια." },
+    ],
+  },
+  {
+    id: "owner",
+    title: "Διαχείριση καταστήματος",
+    description: "Ζωντανή εικόνα παραγγελιών. Στο Pro, λογαριασμοί και εξόφληση.",
+    items: [
+      { title: "Live dashboard", description: "Νέες παραγγελίες και κατάσταση σε πραγματικό χρόνο." },
+      {
+        title: "Τραπέζια και λογαριασμοί · Pro",
+        description: "Ανοιχτοί λογαριασμοί και ολοκλήρωση με μετρητά ή κάρτα από τη ροή του σερβιτόρου.",
+      },
+      {
+        title: "Αναφορές Pro",
+        description: "Analytics, απόδοση σερβιτόρων και εικόνα εσόδων βάρδιας.",
+      },
+    ],
+  },
 ] as const;
 
-export const useCases = [
-  {
-    title: "Καφετέριες",
-    description: "Γρήγορα ροφήματα και snacks με σταθερή ροή παραγγελιών σε peak ώρες.",
-  },
-  {
-    title: "Bars",
-    description: "Ποτά και συνοδευτικά με λιγότερα λάθη και πιο γρήγορο bar service.",
-  },
-  {
-    title: "Beach bars",
-    description: "Λιγότερο τρέξιμο στην άμμο — οι πελάτες παραγγέλνουν από το τραπέζι τους.",
-  },
-  {
-    title: "Εστιατόρια",
-    description: "Πιάτα και extras με πιο καθαρή επικοινωνία κουζίνας και σερβιτόρων.",
-  },
-  {
-    title: "Ταβέρνες",
-    description: "Μεζέδες και μερίδες με απλό QR flow για μεγάλα τραπέζια και παρέες.",
-  },
+export const starterFeatures = [
+  "QR ανά τραπέζι",
+  "Ψηφιακό μενού",
+  "Παραγγελίες πελατών από QR",
+  "Προϊόντα, κατηγορίες, extras και επιλογές",
+  "Βασικό live dashboard παραγγελιών (χωρίς analytics)",
+  "Orderly Print",
+  "Εκτύπωση παραγγελιών προς bar και κουζίνα",
 ] as const;
 
-export const pricingFeatures = [
-  "QR ordering",
-  "Dashboard",
-  "Waiter view",
-  "Προϊόντα, κατηγορίες και extras",
-  "Live παραγγελίες",
-  "Βασική υποστήριξη",
+export const starterExcluded = [
+  "Waiter PDA",
+  "Παραγγελίες σερβιτόρου σε τραπέζι",
+  "Take Away από PDA",
+  "Άτομα στο τραπέζι στη ροή σερβιτόρου",
+  "Ολοκλήρωση λογαριασμών / εξόφληση τραπεζιών",
+  "Analytics και αναφορές",
+] as const;
+
+export const proExtras = [
+  "Waiter PDA",
+  "Παραγγελίες σερβιτόρου σε τραπέζι",
+  "Take Away χωρίς τραπέζι",
+  "Επιλογή ατόμων στη ροή σερβιτόρου",
+  "Ολοκλήρωση λογαριασμών με μετρητά ή κάρτα",
+  "Analytics και αναφορές dashboard",
+  "Αναφορές απόδοσης σερβιτόρων",
+  "Αναφορές βάρδιας και εσόδων",
+] as const;
+
+export const pricingPlans = [
+  {
+    id: "starter",
+    name: "Starter",
+    price: "25€",
+    cadence: "/μήνα",
+    per: "ανά κατάστημα",
+    positioning: "Τα απαραίτητα για ψηφιακή παραγγελιοληψία.",
+    featured: false,
+    includes: starterFeatures,
+    excludes: starterExcluded,
+    cta: "Επικοινώνησε για Starter",
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    price: "40€",
+    cadence: "/μήνα",
+    per: "ανά κατάστημα",
+    positioning: "Πλήρης λειτουργία για το service σου.",
+    featured: true,
+    badge: "Προτεινόμενο",
+    includes: [...starterFeatures, ...proExtras],
+    excludes: [] as const,
+    cta: "Επικοινώνησε για Pro",
+  },
 ] as const;
 
 export const faqItems = [
   {
-    q: "Χρειάζεται app ο πελάτης;",
-    a: "Όχι, ανοίγει από browser με το QR του τραπεζιού.",
+    q: "Χρειάζεται εφαρμογή ο πελάτης;",
+    a: "Όχι. Σκανάρει το QR του τραπεζιού και παραγγέλνει από τον browser του κινητού — χωρίς εγκατάσταση.",
   },
   {
-    q: "Συνδέεται με POS;",
-    a: "Όχι, το Orderly είναι απλό QR ordering και μπορεί να λειτουργήσει χωρίς POS integration.",
+    q: "Ποια είναι η διαφορά Starter και Pro;",
+    a: "Το Starter καλύπτει QR ανά τραπέζι, ψηφιακό μενού, βασικό live dashboard παραγγελιών και Orderly Print — χωρίς analytics. Το Pro προσθέτει Waiter PDA, παραγγελίες σερβιτόρου, Take Away, άτομα στο τραπέζι, ολοκλήρωση λογαριασμών και αναφορές / analytics.",
   },
   {
-    q: "Γίνονται πληρωμές πελατών μέσα από το Orderly;",
-    a: "Όχι, οι πληρωμές γίνονται όπως ήδη λειτουργεί το μαγαζί.",
+    q: "Τι κάνει το Orderly Print;",
+    a: "Στέλνει την παραγγελία στους εκτυπωτές παραγωγής. Τα ποτά πηγαίνουν στο bar και τα πιάτα στην κουζίνα, ώστε η ομάδα να ετοιμάζει χωρίς φωνές και χαρτάκια.",
   },
   {
-    q: "Μπορούν οι σερβιτόροι να βλέπουν παραγγελίες;",
-    a: "Ναι, μέσω waiter view από ιδιωτικό link.",
+    q: "Χρειάζεται σύνδεση με POS;",
+    a: "Όχι. Το Orderly δεν απαιτεί σύνδεση με POS. Οι πληρωμές ολοκληρώνονται στο κατάστημα, με μετρητά ή κάρτα, μέσω της ροής εξόφλησης του Orderly.",
   },
   {
-    q: "Μπορώ να αλλάζω προϊόντα και τιμές;",
-    a: "Ναι, από το dashboard μπορείς να διαχειρίζεσαι προϊόντα, κατηγορίες, extras και διαθεσιμότητα.",
+    q: "Γίνονται online πληρωμές πελατών μέσα στο Orderly;",
+    a: "Όχι. Ο πελάτης δεν πληρώνει μέσα από την εφαρμογή. Η ολοκλήρωση γίνεται στο κατάστημα, με μετρητά ή κάρτα, μέσω της ροής εξόφλησης του Orderly.",
+  },
+  {
+    q: "Μπορεί ο σερβιτόρος να περάσει παραγγελία από PDA;",
+    a: "Ναι, στο πακέτο Pro. Από το Waiter PDA επιλέγει τραπέζι, άτομα και προϊόντα, ή περνά Take Away χωρίς τραπέζι.",
+  },
+  {
+    q: "Υποστηρίζεται Take Away;",
+    a: "Ναι, μέσω Waiter PDA στο πακέτο Pro. Δεν απαιτείται τραπέζι — η παραγγελία μπαίνει ως πακέτο και εμφανίζεται στο dashboard.",
   },
 ] as const;

@@ -1,10 +1,9 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
-import { ProblemSection } from "@/components/landing/ProblemSection";
-import { SolutionSection } from "@/components/landing/SolutionSection";
+import { ProductShowcaseSection } from "@/components/landing/ProductShowcaseSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
-import { FeaturesSection } from "@/components/landing/FeaturesSection";
-import { UseCasesSection } from "@/components/landing/UseCasesSection";
+import { CapabilitiesSection } from "@/components/landing/CapabilitiesSection";
+import { DemoCTASection } from "@/components/landing/DemoCTASection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { FinalCTASection } from "@/components/landing/FinalCTASection";
@@ -16,11 +15,10 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <HeroSection />
-        <ProblemSection />
-        <SolutionSection />
+        <ProductShowcaseSection />
         <HowItWorksSection />
-        <FeaturesSection />
-        <UseCasesSection />
+        <CapabilitiesSection />
+        <DemoCTASection />
         <PricingSection />
         <FAQSection />
         <FinalCTASection />
