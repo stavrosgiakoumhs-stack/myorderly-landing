@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { siteMeta } from "@/lib/landing-content";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -9,16 +10,19 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Orderly — QR ordering για μαγαζιά εστίασης",
-  description: "Απλό QR ordering για καφέ, bars, εστιατόρια και beach bars.",
+  title: {
+    default: siteMeta.title,
+    template: "%s · Orderly",
+  },
+  description: siteMeta.description,
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "Orderly — QR ordering για μαγαζιά εστίασης",
-    description: "Απλό QR ordering για καφέ, bars, εστιατόρια και beach bars.",
+    title: siteMeta.title,
+    description: siteMeta.description,
     locale: "el_GR",
     type: "website",
   },

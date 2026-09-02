@@ -25,3 +25,16 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+:focus-visible {
+  outline: 2px solid var(--color-orderly-blue);
+  outline-offset: 2px;
+}
+
+.demo-scroll-hide {
+  scrollbar-width: none;
+}
+
+.demo-scroll-hide::-webkit-scrollbar {
+  display: none;
+}

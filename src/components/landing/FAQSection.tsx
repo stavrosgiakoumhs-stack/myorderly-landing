@@ -2,7 +2,11 @@ import { faqItems } from "@/lib/landing-content";
 
 export function FAQSection() {
   return (
-    <section id="faq" className="border-b border-slate-200/80 bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="faq-heading">
+    <section
+      id="faq"
+      className="scroll-mt-20 border-b border-slate-200/80 bg-white py-16 sm:py-20 lg:py-24"
+      aria-labelledby="faq-heading"
+    >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orderly-blue">FAQ</p>
