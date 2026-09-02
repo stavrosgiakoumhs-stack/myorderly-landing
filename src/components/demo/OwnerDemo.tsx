@@ -188,10 +188,13 @@ function DashboardAnalytics({
 
       <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
         <h2 className="text-base font-bold text-slate-950">Έσοδα ανά ώρα</h2>
-        <div className="mt-4 flex h-28 items-end gap-1.5">
+        <div className="mt-4 flex h-32 items-end gap-1.5">
           {data.hourly.map((row) => (
-            <div className="flex flex-1 flex-col items-center justify-end gap-1" key={row.hour}>
-              <span className="w-full rounded-t bg-blue-600" style={{ height: `${(row.value / maxHour) * 100}%` }} />
+            <div className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1" key={row.hour}>
+              <span
+                className="w-full min-h-2 rounded-t bg-blue-600"
+                style={{ height: `${Math.max((row.value / maxHour) * 104, 8)}px` }}
+              />
               <span className="text-[10px] font-semibold text-slate-500">{row.hour.slice(0, 2)}</span>
             </div>
           ))}

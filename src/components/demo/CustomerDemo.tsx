@@ -36,6 +36,7 @@ export function CustomerDemo() {
   const [confirmed, setConfirmed] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
   const [addedFlash, setAddedFlash] = useState(false);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
   const [cartVisible, setCartVisible] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
   const productsRef = useRef<HTMLElement | null>(null);
@@ -87,9 +88,11 @@ export function CustomerDemo() {
       };
     });
     setAddedFlash(true);
+    setAddedProductId(product.id);
     if (flashTimer.current !== null) window.clearTimeout(flashTimer.current);
     flashTimer.current = window.setTimeout(() => {
       setAddedFlash(false);
+      setAddedProductId(null);
       flashTimer.current = null;
     }, 1500);
   }
@@ -221,7 +224,12 @@ export function CustomerDemo() {
                 ) : (
                   <div className="mt-4 space-y-4">
                     {categoryProducts.map((product) => (
-                      <CustomerProductCard key={product.id} onAddProduct={addProduct} product={product} />
+                      <CustomerProductCard
+                        justAdded={addedProductId === product.id}
+                        key={product.id}
+                        onAddProduct={addProduct}
+                        product={product}
+                      />
                     ))}
                   </div>
                 )}
@@ -411,21 +419,17 @@ export function CustomerDemo() {
 
 function CustomerProductCard({
   product,
+  justAdded,
   onAddProduct,
 }: {
   product: DemoProduct;
+  justAdded: boolean;
   onAddProduct: (product: DemoProduct, note: string, extras: DemoExtra[], options: CartOption[]) => void;
 }) {
   const [extraIds, setExtraIds] = useState<string[]>([]);
   const [options, setOptions] = useState<Record<string, string[]>>(() => defaultOptions(product));
   const [note, setNote] = useState("");
-  const [added, setAdded] = useState(false);
-  const timer = useRef<number | null>(null);
   const blocked = requiredMissing(product, options);
-
-  useEffect(() => () => {
-    if (timer.current !== null) window.clearTimeout(timer.current);
-  }, []);
 
   function toggleChoice(group: DemoOptionGroup, choice: DemoChoice) {
     setOptions((current) => {
@@ -527,7 +531,7 @@ function CustomerProductCard({
       <button
         aria-live="polite"
         className={`mt-4 w-full rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-all duration-150 ${
-          added ? "scale-[0.98] bg-emerald-600 shadow-inner" : blocked ? "cursor-not-allowed bg-slate-400" : "bg-blue-600 hover:bg-blue-700"
+          justAdded ? "scale-[0.98] bg-emerald-600 shadow-inner" : blocked ? "cursor-not-allowed bg-slate-400" : "bg-blue-600 hover:bg-blue-700"
         }`}
         disabled={blocked}
         onClick={() => {
@@ -549,16 +553,10 @@ function CustomerProductCard({
           setExtraIds([]);
           setOptions(defaultOptions(product));
           setNote("");
-          setAdded(true);
-          if (timer.current !== null) window.clearTimeout(timer.current);
-          timer.current = window.setTimeout(() => {
-            setAdded(false);
-            timer.current = null;
-          }, 1000);
         }}
         type="button"
       >
-        {added ? "Προστέθηκε ✓" : "Προσθήκη στο καλάθι"}
+        {justAdded ? "Προστέθηκε ✓" : "Προσθήκη στο καλάθι"}
       </button>
     </article>
   );
