@@ -27,7 +27,7 @@ export function DemoApp() {
   }
 
   return (
-    <div className="flex min-h-full flex-col bg-slate-100">
+    <div className="flex h-dvh flex-col bg-white">
       <div className="sticky top-0 z-40 border-b border-amber-300 bg-amber-100">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-2 text-amber-950 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p className="text-sm font-semibold">
@@ -56,25 +56,29 @@ export function DemoApp() {
         </div>
       </div>
 
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center rounded-lg" aria-label="Επιστροφή στο Orderly">
-            <OrderlyLogo className="h-8 w-auto max-w-[128px] object-contain object-left" sizes="128px" />
-          </Link>
-          <a href={contactMailto()} className="text-sm font-semibold text-orderly-blue hover:underline">
-            {CONTACT_CTA_LABEL}
-          </a>
-        </div>
-      </header>
-
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-0 py-0 sm:px-6 sm:py-8">
-        {role === null ? <RolePicker onSelect={setRole} /> : null}
-        <div key={resetKey} className={role && role !== "owner" ? "mx-auto flex w-full max-w-md flex-1 flex-col" : "flex flex-1 flex-col"}>
-          {role === "customer" ? <CustomerDemo /> : null}
-          {role === "waiter" ? <WaiterDemo /> : null}
-          {role === "owner" ? <OwnerDemo /> : null}
-        </div>
-      </main>
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        {role === null ? (
+          <>
+            <header className="border-b border-slate-200 bg-white">
+              <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+                <Link href="/" className="flex items-center rounded-lg" aria-label="Επιστροφή στο Orderly">
+                  <OrderlyLogo className="h-8 w-auto max-w-[128px] object-contain object-left" sizes="128px" />
+                </Link>
+                <a href={contactMailto()} className="text-sm font-semibold text-orderly-blue hover:underline">
+                  {CONTACT_CTA_LABEL}
+                </a>
+              </div>
+            </header>
+            <RolePicker onSelect={setRole} />
+          </>
+        ) : (
+          <div key={resetKey}>
+            {role === "customer" ? <CustomerDemo /> : null}
+            {role === "waiter" ? <WaiterDemo /> : null}
+            {role === "owner" ? <OwnerDemo /> : null}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -102,7 +106,7 @@ function RolePicker({ onSelect }: { onSelect: (role: DemoRole) => void }) {
   ];
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-10 sm:px-0">
+    <div className="flex flex-1 flex-col px-4 py-10 sm:px-6">
       <h1 className="text-center text-3xl font-extrabold tracking-tight text-orderly-navy sm:text-4xl">
         Πώς θέλεις να γνωρίσεις το Orderly;
       </h1>

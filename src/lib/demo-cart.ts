@@ -1,32 +1,55 @@
 import type { PrintStation } from "@/lib/demo-data";
 
+export type CartExtra = {
+  id: string;
+  name: string;
+  price: number;
+};
+
+export type CartOption = {
+  id: string;
+  groupId: string;
+  groupName: string;
+  name: string;
+  priceDelta: number;
+};
+
 export type CartLine = {
   lineId: string;
   productId: string;
+  categoryId: string;
   name: string;
   station: PrintStation;
   quantity: number;
-  unitPrice: number;
-  extras: string[];
-  options: string[];
-};
-
-export type SubmittedOrder = {
-  id: string;
-  contextLabel: string;
-  guestCount: number | null;
+  basePrice: number;
+  extras: CartExtra[];
+  options: CartOption[];
   note: string;
-  lines: CartLine[];
-  total: number;
-  takeaway: boolean;
 };
 
 export function lineTotal(line: CartLine): number {
-  return line.unitPrice * line.quantity;
+  const extras = line.extras.reduce((sum, extra) => sum + Number(extra.price), 0);
+  const options = line.options.reduce((sum, option) => sum + Number(option.priceDelta), 0);
+  return (Number(line.basePrice) + extras + options) * line.quantity;
 }
 
 export function cartTotal(lines: CartLine[]): number {
   return lines.reduce((sum, line) => sum + lineTotal(line), 0);
+}
+
+export function cartQuantity(lines: CartLine[]): number {
+  return lines.reduce((sum, line) => sum + line.quantity, 0);
+}
+
+export function lineKey(
+  productId: string,
+  note: string,
+  extras: CartExtra[],
+  options: CartOption[],
+): string {
+  const extraIds = extras.map((extra) => extra.id).sort().join(".");
+  const optionIds = options.map((option) => option.id).sort().join(".");
+  return `${productId}:${extraIds}:${optionIds}:${note.trim().toLocaleLowerCase("el-GR")}`;
 }
 
 let lineSeq = 0;
@@ -36,9 +59,13 @@ export function nextLineId(): string {
 }
 
 let orderSeq = 1043;
-export function nextOrderId(): string {
+export function nextOrderNumber(): number {
   orderSeq += 1;
-  return `DEMO-${orderSeq}`;
+  return orderSeq;
+}
+
+export function nextOrderId(): string {
+  return `DEMO-${nextOrderNumber()}`;
 }
 
 export function resetDemoIds() {
