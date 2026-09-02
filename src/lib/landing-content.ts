@@ -1,6 +1,17 @@
 export const REGISTER_URL = "https://app.myorderly.gr/register";
 export const LOGIN_URL = "https://app.myorderly.gr/login";
 export const CONTACT_EMAIL = "stavrosgiakoumhs@gmail.com";
+export const CONTACT_CTA_LABEL = "Επικοινώνησε για ενεργοποίηση";
+
+export function contactMailto(plan?: "Starter" | "Pro"): string {
+  const subject = plan
+    ? `Ενδιαφέρον για Orderly ${plan}`
+    : "Ενδιαφέρον για ενεργοποίηση Orderly";
+  const body = plan
+    ? `Γεια σας,\n\nΘα ήθελα να ενεργοποιήσουμε το πακέτο ${plan} (${plan === "Pro" ? "40€" : "25€"}/μήνα) για το κατάστημά μου.\n\n`
+    : "Γεια σας,\n\nΘα ήθελα πληροφορίες για χειροκίνητη ενεργοποίηση του Orderly στο κατάστημά μου.\n\n";
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export const siteMeta = {
   title: "Orderly — Σύστημα παραγγελιοληψίας για καφέ, bar και εστιατόρια",
@@ -41,9 +52,9 @@ export const howSteps = [
   },
   {
     step: 4,
-    title: "Ολοκλήρωσε τον λογαριασμό",
+    title: "Παρακολούθησε και ολοκλήρωσε",
     description:
-      "Live dashboard, ανοιχτά τραπέζια και ολοκλήρωση με μετρητά ή κάρτα. Στο Pro, βάρδιες και αναφορές.",
+      "Live dashboard για τις παραγγελίες. Στο Pro, ολοκλήρωση λογαριασμών με μετρητά ή κάρτα, βάρδιες και αναφορές.",
   },
 ] as const;
 
@@ -83,10 +94,13 @@ export const capabilityGroups = [
   {
     id: "owner",
     title: "Διαχείριση καταστήματος",
-    description: "Ζωντανή εικόνα και ολοκλήρωση λογαριασμών.",
+    description: "Ζωντανή εικόνα παραγγελιών. Στο Pro, λογαριασμοί και εξόφληση.",
     items: [
       { title: "Live dashboard", description: "Νέες παραγγελίες και κατάσταση σε πραγματικό χρόνο." },
-      { title: "Τραπέζια και λογαριασμοί", description: "Ανοιχτοί λογαριασμοί και ολοκλήρωση με μετρητά ή κάρτα." },
+      {
+        title: "Τραπέζια και λογαριασμοί · Pro",
+        description: "Ανοιχτοί λογαριασμοί και ολοκλήρωση με μετρητά ή κάρτα από τη ροή του σερβιτόρου.",
+      },
       {
         title: "Αναφορές Pro",
         description: "Analytics, απόδοση σερβιτόρων και εικόνα εσόδων βάρδιας.",
@@ -100,8 +114,7 @@ export const starterFeatures = [
   "Ψηφιακό μενού",
   "Παραγγελίες πελατών από QR",
   "Προϊόντα, κατηγορίες, extras και επιλογές",
-  "Βασικό live dashboard παραγγελιών",
-  "Βασική διαχείριση τραπεζιών και λογαριασμών",
+  "Βασικό live dashboard παραγγελιών (χωρίς analytics)",
   "Orderly Print",
   "Εκτύπωση παραγγελιών προς bar και κουζίνα",
 ] as const;
@@ -111,6 +124,7 @@ export const starterExcluded = [
   "Παραγγελίες σερβιτόρου σε τραπέζι",
   "Take Away από PDA",
   "Άτομα στο τραπέζι στη ροή σερβιτόρου",
+  "Ολοκλήρωση λογαριασμών / εξόφληση τραπεζιών",
   "Analytics και αναφορές",
 ] as const;
 
@@ -119,6 +133,7 @@ export const proExtras = [
   "Παραγγελίες σερβιτόρου σε τραπέζι",
   "Take Away χωρίς τραπέζι",
   "Επιλογή ατόμων στη ροή σερβιτόρου",
+  "Ολοκλήρωση λογαριασμών με μετρητά ή κάρτα",
   "Analytics και αναφορές dashboard",
   "Αναφορές απόδοσης σερβιτόρων",
   "Αναφορές βάρδιας και εσόδων",
@@ -135,7 +150,7 @@ export const pricingPlans = [
     featured: false,
     includes: starterFeatures,
     excludes: starterExcluded,
-    cta: "Ξεκίνα με Starter",
+    cta: "Επικοινώνησε για Starter",
   },
   {
     id: "pro",
@@ -148,7 +163,7 @@ export const pricingPlans = [
     badge: "Προτεινόμενο",
     includes: [...starterFeatures, ...proExtras],
     excludes: [] as const,
-    cta: "Ξεκίνα με Pro",
+    cta: "Επικοινώνησε για Pro",
   },
 ] as const;
 
@@ -159,7 +174,7 @@ export const faqItems = [
   },
   {
     q: "Ποια είναι η διαφορά Starter και Pro;",
-    a: "Το Starter καλύπτει QR ανά τραπέζι, ψηφιακό μενού, live dashboard, λογαριασμούς και Orderly Print. Το Pro προσθέτει Waiter PDA, παραγγελίες σερβιτόρου, Take Away, άτομα στο τραπέζι και αναφορές / analytics.",
+    a: "Το Starter καλύπτει QR ανά τραπέζι, ψηφιακό μενού, βασικό live dashboard παραγγελιών και Orderly Print — χωρίς analytics. Το Pro προσθέτει Waiter PDA, παραγγελίες σερβιτόρου, Take Away, άτομα στο τραπέζι, ολοκλήρωση λογαριασμών και αναφορές / analytics.",
   },
   {
     q: "Τι κάνει το Orderly Print;",
@@ -167,11 +182,11 @@ export const faqItems = [
   },
   {
     q: "Χρειάζεται σύνδεση με POS;",
-    a: "Όχι. Το Orderly δουλεύει χωρίς POS integration. Οι πληρωμές ολοκληρώνονται όπως ήδη λειτουργεί το κατάστημα, με μετρητά ή κάρτα στο ταμείο.",
+    a: "Όχι. Το Orderly δεν απαιτεί σύνδεση με POS. Οι πληρωμές ολοκληρώνονται στο κατάστημα, με μετρητά ή κάρτα, μέσω της ροής εξόφλησης του Orderly.",
   },
   {
     q: "Γίνονται online πληρωμές πελατών μέσα στο Orderly;",
-    a: "Όχι. Ο πελάτης δεν πληρώνει μέσα από την εφαρμογή. Η ολοκλήρωση γίνεται στο κατάστημα, με μετρητά ή κάρτα.",
+    a: "Όχι. Ο πελάτης δεν πληρώνει μέσα από την εφαρμογή. Η ολοκλήρωση γίνεται στο κατάστημα, με μετρητά ή κάρτα, μέσω της ροής εξόφλησης του Orderly.",
   },
   {
     q: "Μπορεί ο σερβιτόρος να περάσει παραγγελία από PDA;",

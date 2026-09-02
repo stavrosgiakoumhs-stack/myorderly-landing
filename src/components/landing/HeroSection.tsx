@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { REGISTER_URL } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, contactMailto } from "@/lib/landing-content";
 import { CustomerPhoneMockup, OwnerDashboardMockup, WaiterPdaMockup } from "./ProductMockups";
 import { OrderlyLogo } from "./OrderlyLogo";
 
@@ -41,16 +41,14 @@ export function HeroSection() {
                 Δες το Demo
               </Link>
               <a
-                href={REGISTER_URL}
+                href={contactMailto()}
                 className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-8 text-sm font-semibold text-orderly-navy shadow-sm transition hover:border-orderly-blue/30 hover:bg-slate-50"
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                Ξεκίνα με το Orderly
+                {CONTACT_CTA_LABEL}
               </a>
             </div>
             <p className="mt-6 text-xs text-slate-500">
-              Για καφέ, bars και εστιατόρια · Χωρίς POS και χωρίς online πληρωμές πελατών
+              Για καφέ, bars και εστιατόρια · Χωρίς ανάγκη σύνδεσης με POS και χωρίς online πληρωμές πελατών
             </p>
           </div>
           <div className="relative" aria-hidden>

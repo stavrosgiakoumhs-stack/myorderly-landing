@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { OrderlyLogo } from "@/components/landing/OrderlyLogo";
 import { IconPulse, IconQr, IconWaiter } from "@/components/landing/Icons";
-import { REGISTER_URL } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, contactMailto } from "@/lib/landing-content";
 import { resetDemoIds } from "@/lib/demo-cart";
 import { venue } from "@/lib/demo-data";
 import { CustomerDemo } from "./CustomerDemo";
@@ -61,13 +61,8 @@ export function DemoApp() {
           <Link href="/" className="flex items-center rounded-lg" aria-label="Επιστροφή στο Orderly">
             <OrderlyLogo className="h-8 w-auto max-w-[128px] object-contain object-left" sizes="128px" />
           </Link>
-          <a
-            href={REGISTER_URL}
-            className="text-sm font-semibold text-orderly-blue hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ξεκίνα με το Orderly
+          <a href={contactMailto()} className="text-sm font-semibold text-orderly-blue hover:underline">
+            {CONTACT_CTA_LABEL}
           </a>
         </div>
       </header>

@@ -1,4 +1,4 @@
-import { pricingPlans, REGISTER_URL } from "@/lib/landing-content";
+import { pricingPlans, contactMailto } from "@/lib/landing-content";
 import { IconCheck, IconClose } from "./Icons";
 
 export function PricingSection() {
@@ -15,8 +15,9 @@ export function PricingSection() {
             Δύο μηνιαία πλάνα, ανά κατάστημα.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-slate-600">
-            Η επιλογή πλάνου εδώ είναι ενημερωτική. Η ενεργοποίηση γίνεται με την εγγραφή σου στο Orderly — αυτή η
-            σελίδα δεν αλλάζει πρόσβαση στο προϊόν.
+            Τα πακέτα Starter (25€) και Pro (40€) είναι η εμπορική παρουσίαση. Η επιλογή πλάνου δεν γίνεται αυτόματα
+            μέσα στην εφαρμογή ακόμα — η ενεργοποίηση γίνεται χειροκίνητα, σε συνεννόηση μαζί μας. Μην περιμένεις
+            checkout 25€/40€ στην εγγραφή.
           </p>
         </div>
 
@@ -63,14 +64,12 @@ export function PricingSection() {
                   : null}
               </ul>
               <a
-                href={REGISTER_URL}
+                href={contactMailto(plan.name)}
                 className={`mt-10 flex h-12 w-full items-center justify-center rounded-full text-sm font-semibold transition ${
                   plan.featured
                     ? "bg-gradient-to-r from-orderly-blue to-orderly-blue-dark text-white shadow-lg shadow-orderly-blue/25 hover:brightness-105"
                     : "border border-slate-200 bg-white text-orderly-navy hover:border-orderly-blue/30 hover:bg-slate-50"
                 }`}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 {plan.cta}
               </a>

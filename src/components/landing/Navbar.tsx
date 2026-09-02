@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { OrderlyLogo } from "./OrderlyLogo";
 import { IconClose, IconMenuBars } from "./Icons";
-import { LOGIN_URL, REGISTER_URL, navItems } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, LOGIN_URL, contactMailto, navItems } from "@/lib/landing-content";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -62,12 +62,10 @@ export function Navbar() {
             Σύνδεση
           </a>
           <a
-            href={REGISTER_URL}
+            href={contactMailto()}
             className="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-orderly-blue to-orderly-blue-dark px-5 text-sm font-semibold text-white shadow-md shadow-orderly-blue/25 transition hover:brightness-105"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            Ξεκίνα
+            Επικοινωνία
           </a>
         </div>
 
@@ -108,12 +106,10 @@ export function Navbar() {
               Σύνδεση
             </a>
             <a
-              href={REGISTER_URL}
+              href={contactMailto()}
               className="mt-1 inline-flex h-11 items-center justify-center rounded-full bg-gradient-to-r from-orderly-blue to-orderly-blue-dark text-sm font-semibold text-white"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              Ξεκίνα με το Orderly
+              {CONTACT_CTA_LABEL}
             </a>
           </nav>
         </div>

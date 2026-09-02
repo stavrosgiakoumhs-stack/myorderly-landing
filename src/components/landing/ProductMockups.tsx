@@ -71,7 +71,7 @@ export function WaiterPdaMockup() {
           { n: "7", s: "free" },
           { n: "8", s: "busy" },
           { n: "9", s: "free" },
-          { n: "11", s: "open" },
+          { n: "12", s: "free" },
           { n: "TA", s: "ta" },
         ].map((t) => (
           <span
@@ -142,21 +142,32 @@ export function OwnerDashboardMockup() {
   );
 }
 
-export function PrintTicketMockup() {
+export function PrintTicketsPair() {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-white p-4 shadow-sm">
+    <div className="grid grid-cols-2 gap-2">
+      <PrintStationTicket
+        station="Bar"
+        lines={["2× Freddo espresso", "  μέτριος + καρύδα", "1× Aperol spritz"]}
+      />
+      <PrintStationTicket station="Κουζίνα" lines={["1× Club sandwich"]} />
+    </div>
+  );
+}
+
+function PrintStationTicket({ station, lines }: { station: string; lines: string[] }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-white p-3 shadow-sm">
       <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Orderly Print</p>
-      <p className="mt-1 text-sm font-bold text-orderly-navy">Ticket · Bar</p>
+      <p className="mt-1 text-sm font-bold text-orderly-navy">Ticket · {station}</p>
       <p className="mt-2 font-mono text-[11px] leading-relaxed text-slate-700">
         Τραπέζι 12
-        <br />
-        2× Freddo espresso
-        <br />
-        &nbsp;&nbsp;μέτριος + καρύδα
-        <br />
-        1× Aperol spritz
+        {lines.map((line) => (
+          <span key={line}>
+            <br />
+            {line}
+          </span>
+        ))}
       </p>
-      <p className="mt-3 text-[10px] text-slate-500">Αντίγραφο κουζίνας: Club sandwich</p>
     </div>
   );
 }

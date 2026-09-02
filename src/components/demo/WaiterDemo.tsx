@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { seedOpenAccounts, venue, waiterTables, type DemoOpenAccount, type DemoTable } from "@/lib/demo-data";
+import { annaOpenAccounts, annaWaiterTables, venue, type DemoOpenAccount, type DemoTable } from "@/lib/demo-data";
 import { formatEuro } from "@/lib/money";
 import { nextOrderId, type CartLine } from "@/lib/demo-cart";
 import { GuestCountPicker } from "./GuestCount";
@@ -34,7 +34,7 @@ export function WaiterDemo() {
   const [table, setTable] = useState<DemoTable | null>(null);
   const [guests, setGuests] = useState(2);
   const [orders, setOrders] = useState<LocalOrder[]>(
-    seedOpenAccounts.map((account) => accountToOrder(account)),
+    annaOpenAccounts.map((account) => accountToOrder(account)),
   );
   const [lastOrder, setLastOrder] = useState<LocalOrder | null>(null);
   const [settling, setSettling] = useState<LocalOrder | null>(null);
@@ -103,7 +103,7 @@ export function WaiterDemo() {
 
           <h3 className="mt-6 text-sm font-bold text-orderly-navy">Τραπέζια</h3>
           <ul className="mt-2 grid grid-cols-4 gap-2">
-            {waiterTables.map((item) => (
+            {annaWaiterTables.map((item) => (
               <li key={item.id}>
                 <button
                   type="button"
@@ -158,7 +158,7 @@ export function WaiterDemo() {
           </button>
           <h2 className="mt-3 text-xl font-extrabold text-orderly-navy">Επίλεξε τραπέζι</h2>
           <ul className="mt-4 grid grid-cols-4 gap-2">
-            {waiterTables.map((item) => (
+            {annaWaiterTables.map((item) => (
               <li key={item.id}>
                 <button
                   type="button"

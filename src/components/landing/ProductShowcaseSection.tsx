@@ -1,4 +1,4 @@
-import { CustomerPhoneMockup, OwnerDashboardMockup, PrintTicketMockup, WaiterPdaMockup } from "./ProductMockups";
+import { CustomerPhoneMockup, OwnerDashboardMockup, PrintTicketsPair, WaiterPdaMockup } from "./ProductMockups";
 
 const showcases = [
   {
@@ -60,7 +60,7 @@ export function ProductShowcaseSection() {
             <p className="mt-2 text-sm leading-relaxed text-slate-600">{showcases[2].body}</p>
             <div className="mt-6 space-y-4" aria-hidden>
               <OwnerDashboardMockup />
-              <PrintTicketMockup />
+              <PrintTicketsPair />
             </div>
           </article>
         </div>

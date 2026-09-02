@@ -269,11 +269,18 @@ export const waiterTables: DemoTable[] = [
   { id: "t12", label: "12", seats: 2, status: "free" },
 ];
 
+/** Tables currently assigned to Anna's PDA shift. Table 11 belongs to Giorgos (owner view only). */
+export const annaWaiterTables: DemoTable[] = waiterTables.filter((table) => table.id !== "t11");
+
 export const seedOpenAccounts: DemoOpenAccount[] = [
   { id: "acc-3", tableLabel: "Τραπέζι 3", guests: 2, total: 18.4, since: "12:10", waiter: "Άννα" },
   { id: "acc-5", tableLabel: "Τραπέζι 5", guests: 4, total: 42.9, since: "12:28", waiter: "Άννα" },
   { id: "acc-11", tableLabel: "Τραπέζι 11", guests: 3, total: 27.5, since: "12:41", waiter: "Γιώργος" },
 ];
+
+export const annaOpenAccounts: DemoOpenAccount[] = seedOpenAccounts.filter(
+  (account) => account.waiter === venue.waiter,
+);
 
 export const seedLiveOrders: DemoLiveOrder[] = [
   {

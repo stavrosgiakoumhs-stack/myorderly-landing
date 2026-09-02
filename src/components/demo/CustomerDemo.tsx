@@ -5,7 +5,7 @@ import Link from "next/link";
 import { venue } from "@/lib/demo-data";
 import { formatEuro } from "@/lib/money";
 import { nextOrderId, type CartLine } from "@/lib/demo-cart";
-import { REGISTER_URL } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, contactMailto } from "@/lib/landing-content";
 import { GuestCountPicker } from "./GuestCount";
 import { MenuOrdering } from "./MenuOrdering";
 
@@ -55,7 +55,7 @@ export function CustomerDemo() {
       {step === "success" && order ? (
         <div className="flex flex-1 flex-col px-5 py-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Demo επιτυχία</p>
-          <h2 className="mt-2 text-2xl font-extrabold text-orderly-navy">Η παραγγελία καταχωρήθηκε.</h2>
+          <h2 className="mt-2 text-2xl font-extrabold text-orderly-navy">Η demo παραγγελία καταχωρήθηκε.</h2>
           <p className="mt-2 text-sm text-slate-600">
             {order.id} · {venue.demoTable.label} · {guests} άτομα · {formatEuro(order.total)}
           </p>
@@ -88,12 +88,10 @@ export function CustomerDemo() {
               Νέα demo παραγγελία
             </button>
             <a
-              href={REGISTER_URL}
+              href={contactMailto()}
               className="flex h-12 items-center justify-center rounded-full bg-orderly-navy text-sm font-semibold text-white"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              Ξεκίνα με το Orderly
+              {CONTACT_CTA_LABEL}
             </a>
             <Link href="/" className="text-center text-sm font-medium text-orderly-blue">
               Επιστροφή στη σελίδα

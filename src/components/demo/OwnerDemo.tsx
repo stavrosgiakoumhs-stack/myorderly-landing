@@ -222,7 +222,7 @@ function ReportsTab() {
     <div className="space-y-6">
       <div className="grid gap-3 sm:grid-cols-4">
         <StatCard label="Παραγγελίες" value={String(analytics.orderCount)} />
-        <StatCard label="Μέση απόδειξη" value={formatEuro(analytics.avgTicket)} />
+        <StatCard label="Μέσος λογαριασμός" value={formatEuro(analytics.avgTicket)} />
         <StatCard label="Ανοιχτά τραπέζια" value={String(analytics.openTables)} />
         <StatCard label="Take Away" value={String(analytics.takeawayCount)} />
       </div>

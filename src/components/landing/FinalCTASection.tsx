@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LOGIN_URL, REGISTER_URL } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, LOGIN_URL, contactMailto } from "@/lib/landing-content";
 
 export function FinalCTASection() {
   return (
@@ -14,7 +14,7 @@ export function FinalCTASection() {
           Έτοιμος να βάλεις τάξη στην παραγγελιοληψία;
         </h2>
         <p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg">
-          Δοκίμασε το demo ή άνοιξε λογαριασμό και στήσε μενού, QR, print και dashboard.
+          Δοκίμασε το demo ή επικοινώνησέ μας για χειροκίνητη ενεργοποίηση — μενού, QR, print και dashboard.
         </p>
         <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
           <Link
@@ -24,12 +24,10 @@ export function FinalCTASection() {
             Δες το Demo
           </Link>
           <a
-            href={REGISTER_URL}
+            href={contactMailto()}
             className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 bg-white/5 px-8 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            Ξεκίνα με το Orderly
+            {CONTACT_CTA_LABEL}
           </a>
         </div>
         <p className="mt-6 text-xs text-slate-400">

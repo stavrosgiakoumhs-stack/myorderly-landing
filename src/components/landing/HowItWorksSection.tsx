@@ -12,11 +12,12 @@ export function HowItWorksSection() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-orderly-blue">Πώς λειτουργεί</p>
             <h2 id="how-heading" className="mt-2 text-3xl font-extrabold tracking-tight text-orderly-navy sm:text-4xl">
-              Από το μενού μέχρι τον λογαριασμό.
+              Από το μενού μέχρι την παραγωγή.
             </h2>
           </div>
           <p className="max-w-md text-sm text-slate-600 sm:text-right">
-            Μία ροή για πελάτη, σερβιτόρο, bar και κουζίνα — χωρίς POS και χωρίς εφαρμογή για τον πελάτη.
+            Μία ροή για πελάτη, σερβιτόρο, bar και κουζίνα — χωρίς ανάγκη σύνδεσης με POS και χωρίς εφαρμογή για τον
+            πελάτη.
           </p>
         </div>
         <ol className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

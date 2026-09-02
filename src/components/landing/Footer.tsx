@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { OrderlyLogo } from "./OrderlyLogo";
-import { CONTACT_EMAIL, LOGIN_URL, REGISTER_URL } from "@/lib/landing-content";
+import { CONTACT_CTA_LABEL, CONTACT_EMAIL, LOGIN_URL, contactMailto } from "@/lib/landing-content";
 
 export function Footer() {
   return (
@@ -34,13 +34,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href={REGISTER_URL}
-                    className="text-white/90 hover:text-white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Ξεκίνα με το Orderly
+                  <a href={contactMailto()} className="text-white/90 hover:text-white">
+                    {CONTACT_CTA_LABEL}
                   </a>
                 </li>
                 <li>
