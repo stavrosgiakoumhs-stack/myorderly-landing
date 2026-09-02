@@ -198,21 +198,13 @@ export function WaiterDemo() {
       ) : null}
 
       {screen === "menu" ? (
-        <div className="flex min-h-0 flex-1 flex-col">
-          <button
-            type="button"
-            onClick={() => setScreen(mode === "takeaway" ? "floor" : "guests")}
-            className="self-start px-4 pt-3 text-sm font-medium text-orderly-blue"
-          >
-            ← Πίσω
-          </button>
-          <MenuOrdering
-            contextLabel={contextLabel}
-            guestCount={guestCount}
-            submitLabel="Καταχώρηση (Demo)"
-            onSubmit={submitOrder}
-          />
-        </div>
+        <MenuOrdering
+          contextLabel={contextLabel}
+          guestCount={guestCount}
+          submitLabel="Καταχώρηση (Demo)"
+          onBack={() => setScreen(mode === "takeaway" ? "floor" : "guests")}
+          onSubmit={submitOrder}
+        />
       ) : null}
 
       {screen === "success" && lastOrder ? (

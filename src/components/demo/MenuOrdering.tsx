@@ -11,9 +11,16 @@ type Props = {
   guestCount: number | null;
   submitLabel?: string;
   onSubmit: (payload: { lines: CartLine[]; note: string; total: number }) => void;
+  onBack?: () => void;
 };
 
-export function MenuOrdering({ contextLabel, guestCount, submitLabel = "Αποστολή παραγγελίας", onSubmit }: Props) {
+export function MenuOrdering({
+  contextLabel,
+  guestCount,
+  submitLabel = "Αποστολή παραγγελίας",
+  onSubmit,
+  onBack,
+}: Props) {
   const [categoryId, setCategoryId] = useState(categories[0].id);
   const [lines, setLines] = useState<CartLine[]>([]);
   const [note, setNote] = useState("");
@@ -63,6 +70,11 @@ export function MenuOrdering({ contextLabel, guestCount, submitLabel = "Αποσ
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
       <div className="border-b border-slate-200 bg-white px-4 py-3">
+        {onBack ? (
+          <button type="button" onClick={onBack} className="mb-1 text-sm font-medium text-orderly-blue">
+            ← Πίσω
+          </button>
+        ) : null}
         <p className="text-xs font-semibold uppercase tracking-wider text-orderly-blue">{contextLabel}</p>
         <p className="text-sm text-slate-600">
           {guestCount ? `${guestCount} άτομα · ` : null}
