@@ -104,6 +104,7 @@ export type DemoAnalytics = {
   takeawayCollections: number;
   takeawayCompleted: number;
   hourly: { hour: string; value: number }[];
+  daily: { label: string; value: number }[];
   topProducts: { name: string; qty: number; revenue: number }[];
   topCategories: { name: string; qty: number; revenue: number }[];
   waiters: { name: string; orders: number; revenue: number }[];
@@ -636,6 +637,15 @@ const todayAnalytics: DemoAnalytics = {
     { hour: "17:00", value: 55 },
     { hour: "18:00", value: 66 },
   ],
+  daily: [
+    { label: "Σαβ", value: 38 },
+    { label: "Κυρ", value: 52 },
+    { label: "Δευ", value: 61 },
+    { label: "Τρι", value: 58 },
+    { label: "Τετ", value: 74 },
+    { label: "Πεμ", value: 69 },
+    { label: "Παρ", value: 84 },
+  ],
   topProducts: [
     { name: "Freddo espresso", qty: 48, revenue: 168.0 },
     { name: "Aperol spritz", qty: 19, revenue: 180.5 },
@@ -670,6 +680,7 @@ function scaleAnalytics(base: DemoAnalytics, factor: number, orderFactor: number
     takeawayCollections: round(base.takeawayCollections * factor),
     takeawayCompleted: Math.round(base.takeawayCompleted * orderFactor),
     hourly: base.hourly.map((row) => ({ ...row, value: round(row.value * factor) })),
+    daily: base.daily.map((row) => ({ ...row, value: round(row.value * factor) })),
     topProducts: base.topProducts.map((row) => ({
       ...row,
       qty: Math.round(row.qty * orderFactor),

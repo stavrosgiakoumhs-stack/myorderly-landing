@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import {
   analyticsByPreset,
   categories,
@@ -18,6 +17,7 @@ import {
 } from "@/lib/demo-data";
 import { formatAmountEuro } from "@/lib/money";
 import { formatTableDisplayName } from "@/lib/demo-format";
+import { DashboardBackHeader, DashboardHomeHeader } from "./DashboardHeader";
 
 type OwnerView =
   | "home"
@@ -30,15 +30,15 @@ type OwnerView =
   | "prints"
   | "settings";
 
-const navCards: { id: OwnerView; title: string; body: string }[] = [
-  { id: "orders", title: "Orders", body: "Ζωντανές παραγγελίες και λογαριασμοί." },
-  { id: "products", title: "Products", body: "Προϊόντα, τιμές, extras και διαθεσιμότητα." },
-  { id: "categories", title: "Categories", body: "Ομάδες μενού όπως στο QR και το PDA." },
-  { id: "tables", title: "Tables & QR", body: "Τραπέζια και QR σύνδεσμοι." },
-  { id: "waiters", title: "Waiters", body: "Ομάδα αίθουσας και αναθέσεις." },
-  { id: "shifts", title: "Shifts", body: "Ανοιχτές βάρδιες και σύνολα." },
-  { id: "prints", title: "Εκτυπώσεις", body: "Δρομολόγηση Bar / Κουζίνα." },
-  { id: "settings", title: "Settings", body: "Στοιχεία καταστήματος (demo)." },
+const navCards: { id: Exclude<OwnerView, "home">; title: string; body: string }[] = [
+  { id: "orders", title: "Orders", body: "Live orders and open table accounts." },
+  { id: "products", title: "Products", body: "Manage products." },
+  { id: "categories", title: "Categories", body: "Manage categories." },
+  { id: "tables", title: "Tables & QR", body: "Tables and QR codes." },
+  { id: "waiters", title: "Waiters", body: "Manage waiters." },
+  { id: "shifts", title: "Shifts", body: "Open and closed shifts." },
+  { id: "prints", title: "Εκτυπώσεις", body: "Σταθμοί εκτύπωσης Bar / Κουζίνα και δρομολόγηση παραγγελιών." },
+  { id: "settings", title: "Settings", body: "Shop settings." },
 ];
 
 const datePresets: { id: AnalyticsPreset; label: string }[] = [
@@ -64,60 +64,51 @@ const sourceLabel = {
 export function OwnerDemo() {
   const [view, setView] = useState<OwnerView>("home");
   const [preset, setPreset] = useState<AnalyticsPreset>("today");
+  const [unseenOrders, setUnseenOrders] = useState(2);
   const [liveOrders, setLiveOrders] = useState(seedLiveOrders);
   const [available, setAvailable] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(products.map((product) => [product.id, true])),
   );
+  const activeCard = navCards.find((card) => card.id === view);
+
+  function openView(next: Exclude<OwnerView, "home">) {
+    if (next === "orders") setUnseenOrders(0);
+    setView(next);
+  }
 
   return (
-    <main className="min-h-screen bg-white px-4 py-6">
-      <div className="mx-auto max-w-5xl">
-        <header className="flex items-center gap-3">
-          <Image
-            alt="Orderly"
-            className="h-12 w-12 rounded-xl shadow-sm shadow-blue-200/40"
-            height={96}
-            priority
-            src="/icon-192x192.png"
-            width={96}
-          />
-          <div className="min-w-0">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Orderly</p>
-            <h1 className="truncate text-2xl font-black tracking-tight text-slate-950">
-              {view === "home" ? "Dashboard" : navCards.find((card) => card.id === view)?.title}
-            </h1>
-            <p className="truncate text-sm text-slate-600">{venue.name}</p>
-          </div>
-        </header>
-
-        {view !== "home" ? (
-          <button
-            className="mt-4 rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-blue-700"
-            onClick={() => setView("home")}
-            type="button"
-          >
-            Πίσω στο Dashboard
-          </button>
-        ) : null}
-
+    <main className="min-h-screen bg-white px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto max-w-6xl">
         {view === "home" ? (
           <>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <DashboardHomeHeader shopName={venue.name} />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {navCards.map((card) => (
                 <button
                   key={card.id}
-                  className="rounded-2xl border border-blue-100 bg-white p-4 text-left shadow-sm shadow-blue-950/5 transition hover:border-blue-300 hover:bg-blue-50"
-                  onClick={() => setView(card.id)}
+                  className="relative rounded-2xl border border-blue-100 bg-white p-5 text-left shadow-sm shadow-blue-950/5 transition hover:border-blue-300 hover:bg-blue-50"
+                  onClick={() => openView(card.id)}
                   type="button"
                 >
-                  <p className="font-semibold text-slate-950">{card.title}</p>
-                  <p className="mt-1 text-sm text-slate-600">{card.body}</p>
+                  {card.id === "orders" && unseenOrders > 0 ? (
+                    <span className="absolute right-4 top-4 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white">
+                      {unseenOrders} νέα
+                    </span>
+                  ) : null}
+                  <p className="pr-16 text-lg font-semibold text-slate-950">{card.title}</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">{card.body}</p>
                 </button>
               ))}
             </div>
             <DashboardAnalytics preset={preset} onPresetChange={setPreset} />
           </>
-        ) : null}
+        ) : (
+          <DashboardBackHeader
+            description={activeCard?.body ?? ""}
+            onBack={() => setView("home")}
+            title={activeCard?.title ?? ""}
+          />
+        )}
 
         {view === "orders" ? <OrdersView orders={liveOrders} onStatus={setLiveOrders} /> : null}
         {view === "products" ? <ProductsView available={available} onToggle={setAvailable} /> : null}
@@ -139,29 +130,40 @@ function DashboardAnalytics({
   preset: AnalyticsPreset;
   onPresetChange: (preset: AnalyticsPreset) => void;
 }) {
+  const [grain, setGrain] = useState<"hour" | "day">("hour");
   const data = analyticsByPreset[preset];
-  const maxHour = Math.max(...data.hourly.map((row) => row.value), 1);
+  const series = grain === "hour" ? data.hourly.map((row) => ({ label: row.hour.slice(0, 2), value: row.value })) : data.daily;
+  const maxBar = Math.max(...series.map((row) => row.value), 1);
   const maxWaiter = Math.max(...data.waiters.map((row) => row.revenue), 1);
   const payTotal = data.cash + data.card;
 
   return (
-    <section className="mt-8 space-y-6">
-      <div className="flex flex-wrap gap-2">
-        {datePresets.map((item) => {
-          const active = preset === item.id;
-          return (
-            <button
-              key={item.id}
-              className={`rounded-full border px-3 py-1.5 text-sm font-semibold ${
-                active ? "border-blue-600 bg-blue-600 text-white" : "border-blue-200 bg-white text-blue-700"
-              }`}
-              onClick={() => onPresetChange(item.id)}
-              type="button"
-            >
-              {item.label}
-            </button>
-          );
-        })}
+    <section className="mt-10 space-y-6">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="text-xl font-bold text-slate-950">Επισκόπηση επιχείρησης</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            Τα ποσά ακολουθούν την ώρα Europe/Athens. Οι ανοιχτοί λογαριασμοί είναι η τρέχουσα κατάσταση, όχι ιστορικό
+            περιόδου. Demo δεδομένα — δεν είναι live σύνδεση.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {datePresets.map((item) => {
+            const active = preset === item.id;
+            return (
+              <button
+                key={item.id}
+                className={`rounded-full border px-3 py-1.5 text-sm font-semibold ${
+                  active ? "border-blue-600 bg-blue-600 text-white" : "border-blue-200 bg-white text-blue-700"
+                }`}
+                onClick={() => onPresetChange(item.id)}
+                type="button"
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
       {preset === "custom" ? (
         <p className="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3 text-sm font-semibold text-slate-700">
@@ -179,39 +181,65 @@ function DashboardAnalytics({
         <StatCard label="Μετρητά" value={formatAmountEuro(data.cash)} />
         <StatCard label="Κάρτες" value={formatAmountEuro(data.card)} />
         <StatCard label="Κλεισμένοι λογαριασμοί" value={String(data.closedAccounts)} />
-        <StatCard label="Ανοιχτοί λογαριασμοί" value={String(data.openAccounts)} />
+        <StatCard label="Ανοιχτοί λογαριασμοί (τώρα)" value={String(data.openAccounts)} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <StatCard label="Take away εισπράξεις" value={formatAmountEuro(data.takeawayCollections)} />
         <StatCard label="Take away ολοκληρωμένα" value={String(data.takeawayCompleted)} />
       </div>
 
-      <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
-        <h2 className="text-base font-bold text-slate-950">Έσοδα ανά ώρα</h2>
-        <div className="mt-4 flex h-32 items-end gap-1.5">
-          {data.hourly.map((row) => (
-            <div className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1" key={row.hour}>
-              <span
-                className="w-full min-h-2 rounded-t bg-blue-600"
-                style={{ height: `${Math.max((row.value / maxHour) * 104, 8)}px` }}
-              />
-              <span className="text-[10px] font-semibold text-slate-500">{row.hour.slice(0, 2)}</span>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-base font-bold text-slate-950">Εισπράξεις στο χρόνο</h3>
+            <div className="flex gap-2">
+              {(
+                [
+                  { id: "hour" as const, label: "Ανά ώρα" },
+                  { id: "day" as const, label: "Ανά ημέρα" },
+                ] as const
+              ).map((item) => {
+                const active = grain === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                      active ? "border-blue-600 bg-blue-600 text-white" : "border-blue-200 bg-white text-blue-700"
+                    }`}
+                    onClick={() => setGrain(item.id)}
+                    type="button"
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="mt-4 flex h-32 items-end gap-1.5">
+            {series.map((row) => (
+              <div className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1" key={row.label}>
+                <span
+                  className="w-full min-h-2 rounded-t bg-blue-600"
+                  style={{ height: `${Math.max((row.value / maxBar) * 104, 8)}px` }}
+                />
+                <span className="text-[10px] font-semibold text-slate-500">{row.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
-      <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
-        <h2 className="text-base font-bold text-slate-950">Τρόποι πληρωμής</h2>
-        <div className="mt-4 space-y-3">
-          <PayRow label="Μετρητά" value={data.cash} total={payTotal} />
-          <PayRow label="Κάρτες" value={data.card} total={payTotal} />
-        </div>
-      </section>
+        <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
+          <h3 className="text-base font-bold text-slate-950">Τρόπος πληρωμής</h3>
+          <div className="mt-4 space-y-3">
+            <PayRow label="Μετρητά" value={data.cash} total={payTotal} />
+            <PayRow label="Κάρτες" value={data.card} total={payTotal} />
+          </div>
+        </section>
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
-          <h2 className="text-base font-bold text-slate-950">Top προϊόντα</h2>
+          <h3 className="text-base font-bold text-slate-950">Κορυφαία προϊόντα</h3>
           <ul className="mt-3 space-y-2">
             {data.topProducts.map((row) => (
               <li className="flex items-center justify-between gap-3 text-sm" key={row.name}>
@@ -224,7 +252,7 @@ function DashboardAnalytics({
           </ul>
         </section>
         <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
-          <h2 className="text-base font-bold text-slate-950">Top κατηγορίες</h2>
+          <h3 className="text-base font-bold text-slate-950">Κορυφαίες κατηγορίες</h3>
           <ul className="mt-3 space-y-2">
             {data.topCategories.map((row) => (
               <li className="flex items-center justify-between gap-3 text-sm" key={row.name}>
@@ -239,7 +267,7 @@ function DashboardAnalytics({
       </div>
 
       <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5">
-        <h2 className="text-base font-bold text-slate-950">Απόδοση σερβιτόρων</h2>
+        <h3 className="text-base font-bold text-slate-950">Απόδοση σερβιτόρων</h3>
         <ul className="mt-4 space-y-3">
           {data.waiters.map((waiter) => (
             <li key={waiter.name}>
@@ -540,8 +568,8 @@ function SettingsView() {
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm shadow-blue-950/5">
-      <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">{label}</p>
-      <p className="mt-2 text-xl font-black text-slate-950">{value}</p>
+      <p className="text-sm font-medium text-slate-500">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-slate-950">{value}</p>
     </div>
   );
 }
